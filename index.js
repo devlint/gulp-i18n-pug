@@ -74,12 +74,12 @@ function addLocaleExtensionDest(file, locale, outputExt) {
     return dest;
 }
 
-function addLocaleDirnameDest(file, locale, outputExt) {
+function addLocaleDirnameDest(file, locale, outputExt, defaultLocale) {
     var base;
     var dest;
     var ext = getExtension(file);
     if (ext) {
-        if(locale === 'fr'){
+        if(locale === defaultLocale){
             dest = path.join(path.dirname(file), path.basename(file, ext) + setExtension(ext));
         }else{
             dest = path.join(locale, path.dirname(file), path.basename(file, ext) + setExtension(ext));
@@ -120,6 +120,7 @@ function plugI18nPlugin(customOptions) {
     var localePath;
     var fileExt;
     var locale;
+    var defaultLocale;
 
     var defaultI18nOptions = {
         i18n: {
@@ -170,7 +171,7 @@ function plugI18nPlugin(customOptions) {
                 if (options.i18n.localeExtension) {
                     dest = addLocaleExtensionDest(baseName, locale, options.i18n.defaultExt);
                 } else {
-                    dest = addLocaleDirnameDest(file.relative, locale, options.i18n.defaultExt);
+                    dest = addLocaleDirnameDest(file.relative, locale, options.i18n.defaultExt, options.i18n.defaultLocale);
                 }
 
                 compiledFiles.push(new gutil.File({
