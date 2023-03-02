@@ -79,7 +79,11 @@ function addLocaleDirnameDest(file, locale, outputExt) {
     var dest;
     var ext = getExtension(file);
     if (ext) {
-        dest = path.join(locale, path.dirname(file), path.basename(file, ext) + setExtension(ext));
+        if(locale === 'fr'){
+            dest = path.join(path.dirname(file), path.basename(file, ext) + setExtension(ext));
+        }else{
+            dest = path.join(locale, path.dirname(file), path.basename(file, ext) + setExtension(ext));
+        }
     } else {
         if (/(\/|\*+)$/i.test(file)) {
             base = file.split('/');
